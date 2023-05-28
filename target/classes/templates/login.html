@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="utf-8">
     <title>Student Management System - Login</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -20,41 +20,58 @@
 
 </nav>
 
-<div class ="container">
+<!-- <div class ="container">
     <div class = "row">
         <h1> Register </h1>
-    </div>
+    </div> -->
 
-    <div class = "row">
+    <div class="container">
+        <div class="row">
+            <h1>Register</h1>
+        </div>
+
+    <!-- <div class = "row">
         <div class = "col-lg-3">
             <a th:href = "@{/students/new}" class = "btn btn-primary btn-sm mb-3"> Login</a>
         </div>
-    </div>
+    </div> -->
 
     <form id="login-form">
         <label for="username-input">Username</label>
-        <input id="username-input" type="text"/>
+        <!-- <input id="username-input" type="text"/> -->
+        <input id="username-input" type="text" required/>
         <label for="password-input">Password</label>
-        <input id="password-input" type="password"/>
-        <button type="submit">Submit</button>
+        <!-- <input id="password-input" type="password"/>
+        <button type="submit">Submit</button> -->
+        <input id="password-input" type="password" required/>
+        <button type="submit" lass="btn btn-primary btn-sm mb-3">Login</button>
     </form>
     <a href="/register">No account? Register here.</a>
     <script>
         document.querySelector('#login-form').addEventListener('submit', async event => {
             event.preventDefault();
             const [username, password] = event.target;
-            console.log({username, password})
-            const loginResult = await fetch('/auth/signin', {
+            // console.log({username, password})
+            // const loginResult = await fetch('/auth/signin', {
+                const response = await fetch('/auth/signin', {
                 method: 'POST',
                 body: JSON.stringify({
                     username: username.value,
                     password: password.value
+                
                 }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
+            
             });
-            console.log({loginResult});
+        
+            // console.log({loginResult});
+            if (response.ok) {
+                window.location.href = '/students/new';
+            } else {
+                alert('Incorrect User Details ');
+            }
         })
     </script>
 
